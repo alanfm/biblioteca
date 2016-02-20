@@ -21,7 +21,8 @@ class Security  extends Controller{
       $_SESSION['login'] = $data[0]['usuario_login'];
       $_SESSION['email'] = $data[0]['usuario_email'];
       $_SESSION['id'] = $data[0]['usuario_id'];
-      $_SESSION['token'] = md5($data[0]['usuario_login']);
+      $_SESSION['HTTP_USER_AGENT'] = md5($_SERVER['HTTP_USER_AGENT']);
+      session_regenerate_id();
       App::redirect('home');
     } else {
       App::redirect('security');
@@ -35,8 +36,12 @@ class Security  extends Controller{
   }
 
   public static function validate_login(){
-    if (empty($_SESSION['token'])) {
+    session_regenerate_id();
+    if (empty($_SESSION['HTTP_USER_AGENT'])) {
       App::redirect('security');
+    }
+    if (isset($_SESSION) AND $_SESSION['HTTP_USER_AGENT'] != md5($_SERVER['HTTP_USER_AGENT'])) {
+      App::redirect('security/logout');
     }
   }
 }

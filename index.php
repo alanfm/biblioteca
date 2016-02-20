@@ -1,6 +1,8 @@
 <?php
-error_reporting(E_ALL | E_STRICT);
+ini_set('display_errors',1);
+ini_set('display_startup_erros',1);
+error_reporting(E_ALL);
 
 include 'libs/autoload.php';
 
-View::template();
+App::run(filter_input(INPUT_GET, 'url', FILTER_SANITIZE_STRING));

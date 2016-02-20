@@ -8,10 +8,8 @@
             </li>
             <li>
               <a class="nav-container" data-toggle="collapse" data-parent="#stacked-menu" href="#emprestimos"><span class="glyphicon glyphicon-export" aria-hidden="true"></span> Emprestimos<div class="caret-container"><span class="caret arrow"></span></div></a>          
-              <ul class="nav nav-pills nav-stacked collapse <?php echo App::getMenu('emprestimos')? 'in': '';?>" id="emprestimos">
-                <li><a href="#">Novo</a></li>
-                <li><a href="#">Listar</a></li>
-                <li><a href="#">Buscar</a></li>
+              <ul class="nav nav-pills nav-stacked collapse <?php echo App::getMenu('emprestimo')? 'in': '';?>" id="emprestimos">
+                <li><a href="emprestimo/listar">Listar</a></li>
               </ul>
             </li>
             <li>
@@ -20,10 +18,8 @@
                 <li data-toggle="collapse" data-parent="#p1" href="#livros">
                   <a class="nav-sub-container">Livros<div class="caret-container"><span class="caret arrow"></span></div></a>
                 </li>
-                <ul class="nav nav-pills nav-stacked collapse <?php echo App::getMenu('livros')? 'in': '';?>" id="livros">
-                  <li><a href="#">Novo</a></li>
-                  <li><a href="#">Listar</a></li>
-                  <li><a href="#">Buscar</a></li>
+                <ul class="nav nav-pills nav-stacked collapse <?php echo App::getMenu('livro')? 'in': '';?>" id="livros">
+                  <li><a href="livro/listar">Listar</a></li>
                 </ul>
                 <li data-toggle="collapse" data-parent="#p1" href="#pessoas">
                   <a class="nav-sub-container">Pessoas<div class="caret-container"><span class="caret arrow"></span></div></a>

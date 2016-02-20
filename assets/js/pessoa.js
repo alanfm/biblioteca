@@ -42,7 +42,8 @@ $(document).ready(function(){
       $.each(data, function(k, v){
         item.push('<tr><td>' + v.pessoa_id + '</td><td>' + v.pessoa_nome + '</td><td>' + (parseInt(v.pessoa_status) == 0? 'Em dias': 'Devendo') + '</td><td>' +
             '<a href="#" data-href="pessoa/get_pessoa/' + v.pessoa_id + '" data-toggle="modal" data-target="#modal-edite" class="btn btn-warning btn-xs" id="editar">Editar</a> ' +
-            '<a href="#" data-href="pessoa/delete/' + v.pessoa_id + '" data-toggle="modal" data-target="#modal-delete" data-msg="Deseja realmente apagar esseregistro?" class="btn btn-danger btn-xs">Apagar</a>');
+            '<a href="#" data-href="pessoa/delete/' + v.pessoa_id + '" data-toggle="modal" data-target="#modal-delete" data-msg="Deseja realmente apagar esseregistro?" class="btn btn-danger btn-xs">Apagar</a>' +
+            '<a href="#" data-href="pessoa/detalhes/' + v.pessoa_id + '" data-toggle="modal" data-target="#modal-detalhes" class="btn btn-info btn-xs" id="detalhes">Detalhes</a>');
       });
 
       $('.pessoa-table-search').html(item.join(""));
