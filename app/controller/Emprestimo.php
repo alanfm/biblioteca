@@ -113,4 +113,19 @@ class Emprestimo extends Controller
         $data['livro'] = $this->model->lista_livro($id);
         $this->view->set_content('emprestimo_report', $data);
     }
+
+    public function delete($id)
+    {
+        $id = (integer) $id;
+        if ($this->model->delete('emprestimo_id',$id)){
+            $this->setModel('ListaLivrosModel');
+            if ($this->model->delete('emprestimo_id',$id)){
+                echo 'Emprestimo cancelado com sucesso!';
+            } else {
+                echo 'Erro ao cancelar o emprestimo ', $id;
+            }
+        } else {
+            echo 'Erro ao cancelar o emprestimo ', $id;
+        }
+    }
 }

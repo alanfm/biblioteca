@@ -15,7 +15,18 @@ class Livro extends Controller
 
 	public function add()
 	{
-		if ($this->model->insert($_POST)) {
+		$data['livro_codigo']     = strtoupper($_POST['livro_codigo']);
+		$data['livro_titulo']     = (string) $_POST['livro_titulo'];
+		$data['livro_edicao']     = (string) $_POST['livro_edicao'];
+		$data['livro_resumo']     = (string) $_POST['livro_resumo'];
+		$data['livro_publicacao'] = (string) $_POST['livro_publicacao'];
+		$data['livro_status']     = (string) $_POST['livro_status'];
+		$data['categoria_id']     = (integer) $_POST['categoria_id'];
+		$data['tipo_id']          = (integer) $_POST['tipo_id'];
+		$data['editora_id']       = (integer) $_POST['editora_id'];
+		$data['autor_id']         = (integer) $_POST['autor_id'];
+
+		if ($this->model->insert($data)) {
 			echo 'Livro cadastrado com sucesso!';
 		} else {
 			echo 'Erro ao cadastrar o livro!';
@@ -24,16 +35,16 @@ class Livro extends Controller
 
 	public function edit()
 	{
-		$data['livro_codigo']     = (string) $_POST['livro_codigo'];
+		$data['livro_codigo']     = strtoupper($_POST['livro_codigo']);
 		$data['livro_titulo']     = (string) $_POST['livro_titulo'];
 		$data['livro_edicao']     = (string) $_POST['livro_edicao'];
 		$data['livro_resumo']     = (string) $_POST['livro_resumo'];
 		$data['livro_publicacao'] = (string) $_POST['livro_publicacao'];
 		$data['livro_status']     = (string) $_POST['livro_status'];
-		$data['categoria_id']     = (string) $_POST['categoria_id'];
-		$data['tipo_id']          = (string) $_POST['tipo_id'];
-		$data['editora_id']       = (string) $_POST['editora_id'];
-		$data['autor_id']         = (string) $_POST['autor_id'];
+		$data['categoria_id']     = (integer) $_POST['categoria_id'];
+		$data['tipo_id']          = (integer) $_POST['tipo_id'];
+		$data['editora_id']       = (integer) $_POST['editora_id'];
+		$data['autor_id']         = (integer) $_POST['autor_id'];
 
 		if ($this->model->update(array('livro_id'=>$_POST['livro_id']), $data)){
 			echo "Registro alterado com sucesso!";

@@ -58,7 +58,6 @@ $(document).ready(function(){
                     '<a href="#" data-href="emprestimo/emprestimo_close/' + v.emprestimo_id + '" data-toggle="modal" data-target="#modal-delete" data-msg="Deseja realmente encerrar esse emprestimo?" class="btn btn-success btn-xs' + (v.emprestimo_status==0?' disabled':'') + '">Receber</a> '+
                     '<a href="#" data-href="emprestimo/emprestimo_renew/' + v.emprestimo_id + '" data-toggle="modal" data-target="#modal-delete" data-msg="O emprestimo será renovado por mais 15 dias.<br>Deseja realmente renovar este emprestimo?" class="btn btn-info btn-xs">Renovar</a> ' +
                     '<a href="#" data-href="emprestimo/report/' + v.emprestimo_id + '" data-toggle="modal" data-target="#modal-report"  class="btn btn-default btn-xs">Detalhes</a></td></tr>');
-                console.log(v);
             });
 
             $('.table-search-emprestimo').html(item.join(""));
@@ -94,11 +93,12 @@ $(document).ready(function(){
     });
 
     $(document).on('click', '.btn-report', function(event){
-        event.preventDefault();        
-        get_emprestimo();
+        event.preventDefault();
         $('#modal-add-livro').modal('hide');
         $('#modal-report').modal('show');
-        $('#modal-report').find('.modal-body').load('emprestimo/report/'+sessionStorage.getItem('emprestimo_id'));
+        $('#modal-report').find('.modal-body').load('emprestimo/report/'+sessionStorage.getItem('emprestimo_id'), function(){
+            get_emprestimo();
+        });
     });
 
     $('#emprestimo_add').on('submit', function(event){
@@ -120,17 +120,15 @@ $(document).ready(function(){
     });
 
     $('#modal-delete').on('show.bs.modal', function(e) {
-        $('.modal-delete-msg').html($(e.relatedTarget).data('msg'));        
-        get_emprestimo();
-        get_livro_add(sessionStorage.getItem('emprestimo_id'));
-        $('.table-search-emprestimo').empty();
+        $('.modal-delete-msg').html($(e.relatedTarget).data('msg'));
         $(this).find('.btn-ok').click(function (){
             $('#modal-delete').modal('hide');
             $('#modal-msg').modal('show');
-            $('#modal-msg').find('.modal-msg-txt').empty().load($(e.relatedTarget).data('href'));
-            get_emprestimo();
-            get_livro_add(sessionStorage.getItem('emprestimo_id'));
-            $('.table-search-emprestimo').empty();
+            $('#modal-msg').find('.modal-msg-txt').empty().load($(e.relatedTarget).data('href'), function(){                
+                get_livro_add(sessionStorage.getItem('emprestimo_id'));
+                $('.table-search-emprestimo').empty();
+                get_emprestimo();
+            });
         });
     });
 
@@ -158,11 +156,13 @@ function get_emprestimo()
         var item = [];
         $.each(data,function(k, v){
             item.push('<tr><td>' + v.emprestimo_id + '</td><td>' + v.pessoa_nome + '</td><td>' + v.livro_titulo + '</td><td>' + (v.emprestimo_status==1?'Aberto':'Entregue') + '</td><td>' + (v.emprestimo_data_fim==1?'Sim':'Não') + '</td><td>' +
-                '<a href="#" data-href="emprestimo/emprestimo_close/' + v.emprestimo_id + '" data-toggle="modal" data-target="#modal-delete" data-msg="Deseja realmente encerrar esse emprestimo?" class="btn btn-success btn-xs' + (v.emprestimo_status==0?' disabled':'') + '">Receber</a> '+
-                '<a href="#" data-href="emprestimo/emprestimo_renew/' + v.emprestimo_id + '" data-toggle="modal" data-target="#modal-delete" data-msg="O emprestimo será renovado por mais 15 dias.<br>Deseja realmente renovar este emprestimo?" class="btn btn-info btn-xs' + (v.emprestimo_data_fim==0?' disabled':'') + '">Renovar</a> ' +
-                '<a href="#" data-href="emprestimo/report/' + v.emprestimo_id + '" data-toggle="modal" data-target="#modal-report"  class="btn btn-default btn-xs">Detalhes</a></td></tr>');
+                '<div class="dropdown"><a id="dLabel" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-xs">Opções <span class="caret"></span></a><ul class="dropdown-menu" aria-labelledby="dLabel">' +
+                (v.emprestimo_status==0? '':'<li><a href="#" data-href="emprestimo/emprestimo_close/' + v.emprestimo_id + '" data-toggle="modal" data-target="#modal-delete" data-msg="Deseja realmente encerrar esse emprestimo?">Receber</a></li>') +
+                (v.emprestimo_data_fim==0?'': '<li><a href="#" data-href="emprestimo/emprestimo_renew/' + v.emprestimo_id + '" data-toggle="modal" data-target="#modal-delete" data-msg="O emprestimo será renovado por mais 15 dias.<br>Deseja realmente renovar este emprestimo?">Renovar</a></li>') +
+                '<li><a href="#" data-href="emprestimo/report/' + v.emprestimo_id + '" data-toggle="modal" data-target="#modal-report">Detalhes</a></li>'+
+                '<li><a href="#" data-href="emprestimo/delete/' + v.emprestimo_id + '" data-toggle="modal" data-target="#modal-delete" data-msg="Deseja realmente cancelar esse emprestimo?">Cancelar</a></li></ul></div></td></tr>');
         });
-        $('.table-list-emprestimo').html(item.join(""));
+        $('.table-list-emprestimo').empty().html(item.join(""));
     });
 }
 

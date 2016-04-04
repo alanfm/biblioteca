@@ -10,7 +10,7 @@ define("DIR_CONTROLLER", DIR_BASE . 'app/controller/');
 define("DIR_MODEL", DIR_BASE . 'app/model/');
 define("DIR_VIEW", DIR_BASE . 'app/view/');
 define("DIR_LIBRARY", DIR_BASE . 'libs/');
-define("BASE_SITE", 'http://192.168.1.72/biblioteca/');
+define("BASE_SITE", 'http://192.168.1.91/biblioteca/');
 
 // Array de diretorios do sistema.
 $dirs = array(
